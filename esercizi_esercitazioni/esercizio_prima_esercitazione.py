@@ -20,6 +20,12 @@ class MovingAverage():
     # creo il metodo compute che riceve in input una lista
     def compute(self, lista):
 
+        if lista is None:
+            raise ExamException('la lista non esiste')
+
+        if type(lista) is not list:
+            raise ExamException('la lista non è una lista')
+
         if len(lista) < self.finestra :
             raise ExamException('la finestra è più grande della lista')
 
@@ -53,6 +59,6 @@ class MovingAverage():
 
         return medie    
 
-# moving_average = MovingAverage(5)
+# moving_average = MovingAverage(2)
 # result = moving_average.compute([2, 4, 8, 16])
 # print(result)
