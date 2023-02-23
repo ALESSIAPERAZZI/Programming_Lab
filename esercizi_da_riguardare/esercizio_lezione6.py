@@ -26,7 +26,7 @@ class CSVFile:
             self.can_read = False
             print('Errore in apertura del file: "{}"'.format(e))
 
-    def get_data(self, start=None, end=None):
+    def get_data(self, start , end):
 
         if not self.can_read:
 
@@ -40,18 +40,49 @@ class CSVFile:
         else:
 
             # sanitizzo i valori start e end
-            start = 1
             try:
-                type(end) == float()
+                start == 1
+            except:
+                print('lo start vale sempre 1')
+                start = 1
+
+            try:
+                end is not None
+            except:
+                print('non mi hai fornito un valore di end, uso il valore 11')
+                end = 11
+                
+            try:
+                type(end) == int()
             except:
                 print('il valore di end non è un numero, uso il valore 11 di default')
                 end = 11
+
+            try:
+                end > 0
+            except:
+                print('mi hai dato un end negativo, uso il suo valore assoluto')
+                end = -end
+
+            try:
+                start < end
+            except:
+                print('mi ha dato un valore di end non adeguato, uso il valore 11')
+                end = 11
+
 
             # Inizializzo una lista vuota per salvare tutti i dati
             data = []
 
             # Apro il file
             my_file = open(self.name, 'r')
+
+            #controllo che il file non sia vuoto
+            try:
+                my_file != None
+            except:
+                print('il file che mi hai dato è vuoto')
+
 
             # Leggo il file linea per linea
             for line in my_file[start:end]:
